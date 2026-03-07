@@ -1,7 +1,5 @@
 # Nginx GitOps Deployment with ArgoCD
 
-Deploy an Nginx application to Kubernetes using ArgoCD's GitOps workflow.
-
 ![ArgoCD Nginx Application](argocd_nginx.png)
 
 ---
@@ -18,9 +16,9 @@ argocd-gitops/
 
 ---
 
-## 🚀 Create & Deploy the Application
+## 🖥️ Method 1 — ArgoCD UI (Manual Sync)
 
-### 1. Create the Application in ArgoCD UI
+### 1. Create the Application
 
 Open the ArgoCD UI and click **NEW APP**, then fill in:
 
@@ -49,55 +47,92 @@ Open the ArgoCD UI and click **NEW APP**, then fill in:
 
 Click **Create**.
 
----
-
 ### 2. Sync the Application
 
 Click **SYNC** → **SYNCHRONIZE** in the ArgoCD UI.
 
-ArgoCD will pull the manifests from GitHub and deploy them to the cluster.
-
----
-
 ### 3. Verify the Deployment
 
 ```bash
-# Check pods are running
 kubectl get pods
-
-# Check service is created
 kubectl get svc
 ```
 
-Expected pod output:
-```
-NAME                                READY   STATUS    RESTARTS
-nginx-deployment-xxxxx-xxxxx        1/1     Running   0
-nginx-deployment-xxxxx-xxxxx        1/1     Running   0
-```
-
----
-
-### 4. Access the Application via Port Forward
+### 4. Access the Application
 
 ```bash
 kubectl port-forward svc/nginx-service 8081:80
 ```
 
-Open your browser and navigate to:
-
-```
-http://localhost:8081
-```
-
-You should see the default **Welcome to nginx!** page.
+Open `http://localhost:8081`
 
 ---
 
-## 🔄 Making Updates
+## ⚡ Method 2 — ArgoCD CLI (Automated GitOps)
 
-1. Push changes to `practicals/nginx-manifests` in GitHub
-2. Click **SYNC** in ArgoCD to apply the changes
-3. ArgoCD will reconcile the cluster state with the new manifests
+### 1. Login
 
-> 💡 To automate this, enable **Auto-Sync** in the application settings.
+```bash
+argocd login localhost:8080
+```
+
+```
+Username: admin
+Password: <admin password>
+```
+
+### 2. Create Application
+
+```bash
+argocd app create nginx-app \
+  --repo https://github.com/Shubhamx18/argocd-gitops.git \
+  --path practicals/nginx-manifests \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace default \
+  --sync-policy automated \
+  --self-heal \
+  --auto-prune
+```
+
+| Flag | What it does |
+|------|--------------|
+| `--sync-policy automated` | Auto syncs on every GitHub push |
+| `--self-heal` | Restores any manually changed/deleted resource |
+| `--auto-prune` | Removes resources deleted from GitHub |
+
+### 3. Check Application
+
+```bash
+argocd app list
+argocd app get nginx-app
+```
+
+### 4. Verify Deployment
+
+```bash
+kubectl get pods
+```
+
+---
+
+## 🧪 Testing GitOps
+
+### Self-Healing Test
+
+Delete a pod manually — Kubernetes brings it back via the Deployment:
+
+```bash
+kubectl delete pod <pod-name>
+kubectl get pods
+```
+
+### Drift Detection Test
+
+Delete the entire Deployment — ArgoCD restores it automatically via `--self-heal`:
+
+```bash
+kubectl delete deployment nginx-deployment
+kubectl get deployment
+```
+
+> Git is the single source of truth. Any drift from it gets auto-corrected.
