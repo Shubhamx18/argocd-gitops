@@ -17,11 +17,29 @@ netflix-manifests/
 
 ## Deploy
 
-Apply the ArgoCD Application manifest — ArgoCD will automatically sync and deploy everything in this folder.
+Clone the repo and navigate to the folder:
+
+```bash
+git clone https://github.com/Shubhamx18/argocd-gitops.git
+cd argocd-gitops/practicals/netflix-manifests
+```
+
+Apply the ArgoCD Application manifest:
 
 ```bash
 kubectl apply -f application.yaml
 ```
+
+Or directly point to the file path without navigating:
+
+```bash
+kubectl apply -f practicals/netflix-manifests/application.yaml
+```
+
+ArgoCD picks it up and deploys `deployment.yaml` and `service.yaml` automatically.
+
+> You can run this from your laptop, EC2, or anywhere that has `kubectl` access to the cluster.
+> Only requirement — `kubectl` is connected to your cluster and ArgoCD is installed.
 
 > **Local** — `destination.server` use `https://kubernetes.default.svc`
 >
