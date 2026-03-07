@@ -2,6 +2,8 @@
 
 Declarative GitOps deployment of Netflix clone using ArgoCD `Application` CRD.
 
+![ArgoCD Netflix](declarative_netflix.png)
+
 ---
 
 ## 📁 Folder Structure
