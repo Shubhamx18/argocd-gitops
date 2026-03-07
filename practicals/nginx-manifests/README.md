@@ -66,6 +66,8 @@ kubectl port-forward svc/nginx-service 8081:80
 
 Open `http://localhost:8081`
 
+> **On EC2?** Use `http://<EC2-PUBLIC-IP>:8081` instead and make sure port `8081` is open in your EC2 Security Group inbound rules.
+
 ---
 
 ## ⚡ Method 2 — ArgoCD CLI (Automated GitOps)
@@ -75,6 +77,8 @@ Open `http://localhost:8081`
 ```bash
 argocd login localhost:8080
 ```
+
+> **On EC2?** Replace `localhost` with your EC2 public IP — `argocd login <EC2-PUBLIC-IP>:8080` and open port `8080` in Security Group.
 
 ```
 Username: admin
