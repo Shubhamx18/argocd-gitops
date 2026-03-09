@@ -1,4 +1,11 @@
-# Nginx GitOps Deployment with ArgoCD
+# Nginx GitOps Deployment with ArgoCD — Declarative Approach (UI & CLI)
+
+> 📌 **Declarative = You describe the desired state in YAML, push to Git, and ArgoCD handles the rest.**  
+> No manual `kubectl apply`. No running commands every time. Git is the single source of truth.
+
+```
+📝 Write YAML  →  ⬆️ Push to Git  →  👁️ ArgoCD watches  →  ✅ Cluster matches Git
+```
 
 ![ArgoCD Nginx Application](argocd_nginx.png)
 
