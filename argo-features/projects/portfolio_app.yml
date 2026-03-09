@@ -4,7 +4,7 @@ metadata:                        # Metadata section
   name: nginx-frontend          # App name
   namespace: argocd             # Must exist in ArgoCD namespace
 spec:
-  project: frontend-team        # Assigns app to the frontend-team Project
+  project: frontend-project        # Assigns app to the frontend-team Project
   source:
     repoURL: https://github.com/shubhamm18/argocd-demos.git  # Git repo
     targetRevision: main        # Branch to watch
