@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1   # API version used by ArgoCD for its custom resources
+kind: AppProject                  # Resource type → defines a Project in ArgoCD
+
+metadata:
+  name: frontend-project          # Name of the project (applications will belong to this project)
+  namespace: argocd               # Project must always be created inside the argocd namespace
+
+spec:
+  description: this project has frontend app   # Optional description to explain purpose of project
+
+  sourceRepos:                   # List of Git repositories allowed for applications in this project
+    - https://github.com/Shubhamx18/argocd-gitops.git
+
+  destinations:                  # Where applications in this project are allowed to deploy
+    - namespace: frontend        # Allowed Kubernetes namespace
+      server: https://kubernetes.default.svc   # Kubernetes cluster URL (default cluster inside ArgoCD)
+
+  clusterResourceWhitelist:      # Controls which cluster-level resources apps can create
+    - group: "*"                 # "*" means allow all API groups
+      kind: "*"                  # "*" means allow all cluster resources (Namespace, CRD, etc.)
+
+  namespaceResourceWhitelist:    # Controls which namespace-level resources apps can create
+    - group: "*"                 # Allow resources from any API group
+      kind: "*"                  # Allow all resources (Deployment, Service, Pod, ConfigMap, etc.)
+
+  roles:                         # Roles define access permissions for users within this project
+    - name: frontend-role        # Name of the role
+      description: role for frontend project access  # Explanation of what this role is for
+
+      policies:                  # RBAC policies defining what this role can do
+        - p, proj:frontend-project:frontend-role, applications, *, frontend-project/*, allow
+        # Policy format:
+        # p → policy rule
+        # proj:frontend-project:frontend-role → role inside this project
+        # applications → resource type
+        # * → allowed actions (get, create, update, delete, sync)
+        # frontend-project/* → applies to all applications in this project
+        # allow → permission granted
