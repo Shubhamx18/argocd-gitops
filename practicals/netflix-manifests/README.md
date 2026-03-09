@@ -1,59 +1,58 @@
-# Netflix Deployment with ArgoCD
+# Netflix Deployment with ArgoCD — Declarative Approach
 
-Declarative GitOps deployment of Netflix clone using ArgoCD `Application` CRD.
+> 📌 **Declarative = You describe the desired state in YAML, push to Git, and ArgoCD handles the rest.**  
+> No manual `kubectl apply`. No running commands every time. Git is the single source of truth.
+
+```
+📝 Write YAML  →  ⬆️ Push to Git  →  👁️ ArgoCD watches  →  ✅ Cluster matches Git
+```
 
 ![ArgoCD Netflix](declarative_netflix.png)
 
 ---
 
-## 📁 Folder Structure
+## Why Declarative?
+
+| ❌ Imperative (manual) | ✅ Declarative (ArgoCD) |
+|---|---|
+| You run `kubectl apply` every time | ArgoCD syncs automatically from Git |
+| Easy to forget what's deployed | Git history = exact record of everything |
+| Config drifts silently | ArgoCD detects drift and auto-heals |
+
+---
+
+## Folder Structure
 
 ```
 netflix-manifests/
-├── deployment.yaml
-├── service.yaml
-└── application.yaml
+├── deployment.yaml   # What to run (image, replicas)
+├── service.yaml      # How to expose it (port)
+└── application.yaml  # Tells ArgoCD: watch this Git repo
 ```
+
+> `application.yaml` is the key file — it's what makes this **declarative**.  
+> You apply it once and ArgoCD takes ownership from there.
 
 ---
 
 ## Deploy
 
-Clone the repo and navigate to the folder:
-
 ```bash
 git clone https://github.com/Shubhamx18/argocd-gitops.git
 cd argocd-gitops/practicals/netflix-manifests
-```
-
-Apply the ArgoCD Application manifest:
-
-```bash
 kubectl apply -f application.yaml
 ```
 
-Or directly point to the file path without navigating:
+That's it. ArgoCD reads the repo and deploys `deployment.yaml` + `service.yaml` automatically.
 
-```bash
-kubectl apply -f practicals/netflix-manifests/application.yaml
-```
+---
 
-ArgoCD picks it up and deploys `deployment.yaml` and `service.yaml` automatically.
+## Destination Server in `application.yaml`
 
-> You can run this from your laptop, EC2, or anywhere that has `kubectl` access to the cluster.
-> Only requirement — `kubectl` is connected to your cluster and ArgoCD is installed.
-
-> **Local** — `destination.server` use `https://kubernetes.default.svc`
->
-> **EC2** — `destination.server` use your actual cluster URL. To get it run:
-> ```bash
-> argocd cluster list
-> ```
-> Then replace in `application.yaml`:
-> ```yaml
-> destination:
->   server: https://<YOUR-CLUSTER-IP>:<PORT>  # from argocd cluster list
-> ```
+| Where | Set this |
+|---|---|
+| Local | `https://kubernetes.default.svc` |
+| EC2 | Run `argocd cluster list` → copy your cluster URL |
 
 ---
 
@@ -66,22 +65,18 @@ kubectl get svc
 
 ---
 
-## Access the Application
+## Access the App
 
 **Local:**
-
 ```bash
 kubectl port-forward svc/netflix-service 3000:3000
 ```
-
-Open `http://localhost:3000`
+→ `http://localhost:3000`
 
 **EC2:**
-
 ```bash
 kubectl port-forward svc/netflix-service 3000:3000 --address 0.0.0.0
 ```
+→ `http://<EC2-PUBLIC-IP>:3000`
 
-Open `http://<EC2-PUBLIC-IP>:3000`
-
-> Make sure port `3000` is open in EC2 Security Group inbound rules.
+> Ensure port `3000` is open in your EC2 Security Group inbound rules.
