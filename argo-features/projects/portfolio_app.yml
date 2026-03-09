@@ -6,7 +6,7 @@ metadata:                        # Metadata section
 spec:
   project: frontend-project        # Assigns app to the frontend-team Project
   source:
-    repoURL: https://github.com/shubhamx18/argocd-demos.git  # Git repo
+    repoURL: https://github.com/Shubhamx18/argocd-gitops.git  # Git repo
     targetRevision: main        # Branch to watch
     path: practicals/portfolio-manifests  # Path in repo with manifests
   destination:
