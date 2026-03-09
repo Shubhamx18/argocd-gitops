@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Shubhamx18/argocd-gitops.git  # Git repo
     targetRevision: main        # Branch to watch
-    path: practicals/portfolio-manifests  # Path in repo with manifests
+    path: practicals/portfolio-manifest  # Path in repo with manifests
   destination:
     server: https://kubernetes.default.svc  # Target cluster, run `argocd cluster list` to see
     namespace: frontend          # Namespace inside that cluster
