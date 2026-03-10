@@ -1,20 +1,20 @@
-apiVersion: argoproj.io/v1alpha1 # ArgoCD Application resource
-kind: Application               # Kind of resource
-metadata:                        # Metadata section                         
-  name: nginx-frontend          # App name
-  namespace: argocd             # Must exist in ArgoCD namespace
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-frontend
+  namespace: argocd
 spec:
-  project: frontend-project        # Assigns app to the frontend-team Project
+  project: frontend-project
   source:
-    repoURL: https://github.com/Shubhamx18/argocd-gitops.git  # Git repo
-    targetRevision: main        # Branch to watch
-    path: practicals/portfolio-manifest  # Path in repo with manifests
+    repoURL: https://github.com/Shubhamx18/argocd-gitops.git
+    targetRevision: main
+    path: practicals/portfolio-manifest
   destination:
-    server: https://kubernetes.default.svc  # Target cluster, run `argocd cluster list` to see
-    namespace: frontend          # Namespace inside that cluster
-  syncPolicy:                    # Sync policy settings
-    automated:                   # Enable automated sync
-      prune: true                 # Delete resources removed from Git
-      selfHeal: true              # Correct drift if resources change in cluster
-    syncOptions:                 # Additional sync options
-      - CreateNamespace=true      # Auto-create namespace if it doesn't exist
+    server: https://kubernetes.default.svc  # add from : argocd cluster list 
+    namespace: frontend
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
