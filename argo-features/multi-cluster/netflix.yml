@@ -1,0 +1,22 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: netflix-app
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/Shubhamx18/argocd-gitops.git
+    targetRevision: HEAD
+    path: practicals/netflix-manifests
+
+  destination:
+    server: https://kubernetes.default.svc  # change this to another cluster API if you want to deploy to a different cluster
+    namespace: default
+
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
