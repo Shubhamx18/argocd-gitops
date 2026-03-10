@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1 # ArgoCD Application resource
 kind: Application               # Kind of resource
 metadata:                        # Metadata section                         
-  name: nginx-frontend          # App name
+  name: portfolio_app         # App name
   namespace: frontend          # Must exist in ArgoCD namespace
 spec:
   project: frontend-project        # Assigns app to the frontend-team Project
