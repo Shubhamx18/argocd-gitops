@@ -47,6 +47,8 @@ main.yml  (root app)
 
 Add a new `.yml` file inside `apps/` and ArgoCD automatically picks it up and deploys it.
 
+![ArgoCD App of Apps](root.png)
+
 ---
 
 ## Setup
