@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: portfolio
-        image: shubhamm18/portfolio:latest
+        image: shubhamm18/portfolio:v1
         ports:
         - containerPort: 80
