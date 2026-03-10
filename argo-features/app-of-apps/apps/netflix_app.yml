@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1  # ArgoCD custom API group
+kind: Application                  # ArgoCD CRD (not built-in k8s resource)
+metadata:
+  name: netflix-app                # name of the ArgoCD application
+  namespace: argocd                # must be in argocd namespace
+spec:
+  project: default                 # ArgoCD project (default = no restrictions)
+
+  source:
+    repoURL: https://github.com/Shubhamx18/argocd-gitops.git  # your github repo
+    targetRevision: HEAD           # always use latest commit on default branch
+    path: practicals/netflix-manifests  # folder inside repo to watch
+
+  destination:
+    server: https://kubernetes.default.svc  # deploy to same cluster ArgoCD is running in
+    namespace: default             # which namespace to deploy the app into
+
+  syncPolicy:
+    automated:                     # no manual SYNC needed, ArgoCD does it automatically
+      selfHeal: true               # if someone manually changes cluster, ArgoCD reverts it back to git
+      prune: true                  # if you delete a file from git, ArgoCD deletes it from cluster too
