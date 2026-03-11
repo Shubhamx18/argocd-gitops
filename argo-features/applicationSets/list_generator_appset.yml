@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: app-sets
+  namespace: argocd
+spec:
+  # The list generator lets you enumerate a static set of elements (apps).
+  generators:
+    - list:
+        elements:
+          - app: netflix
+            path: practicals/netflix-manifests     # path in repo for this app
+          - app: nginx
+            path: practicals/nginx-manifests   # path in repo for this app
+          - app: portfolio
+            path: practicals/portfolio-manifest    # path in repo for this app
+  # Template that will be used to generate individual Application CRs
+  template:
+    metadata:
+      # name template uses the element key 'app'
+      name: '{{app}}-list'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/shubhamx18/argocd-gitops.git
+        targetRevision: main
+        path: '{{path}}'                # resolved from element
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
