@@ -40,7 +40,6 @@ argocd-gitops/
     └── portfolio-app.yaml
 ```
 
-![Notifications repo structure on GitHub](https://raw.githubusercontent.com/Shubhamx18/argocd-gitops/main/notifications/output-images/notifications_repo_structure.png)
 
 ---
 
