@@ -1,0 +1,35 @@
+# ArgoCD Application resource used to deploy the portfolio application
+# from a Git repository using the GitOps approach.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: portfolio-app
+  namespace: argocd
+
+  annotations:
+    # Subscribe to email notifications when application health becomes degraded
+    notifications.argoproj.io/subscribe.on-health-degraded.email: "<receiver-email>"
+
+    # Subscribe to email notifications when the application deployment succeeds
+    notifications.argoproj.io/subscribe.on-deployed.email: "<receiver-email>"
+
+spec:
+  project: default
+
+  # Source repository containing Kubernetes manifests
+  source:
+    repoURL: https://github.com/<github-username>/<repo-name>.git
+    targetRevision: main
+    path: practicals/portfolio-manifest
+
+  # Destination cluster and namespace where application will be deployed
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
+  # Automated sync keeps the cluster state consistent with Git
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
