@@ -6,7 +6,7 @@ metadata:
   name: chai-app
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: chai-app=shubhamm18/chaiapp-devops
+    argocd-image-updater.argoproj.io/image-list: chai-app=shubhamm18/chaiapp-devops   # docker image nanme
 
     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/argocd-image-updater-git-creds
 
@@ -17,7 +17,7 @@ spec:
   source:
     repoURL: https://github.com/shubhamx18/argocd-gitops.git
     targetRevision: main
-    path: practicals/chaiapp-manifests
+    path: practicals/chaiapp-manifests    # path of application manifests
 
   destination:
     server: https://kubernetes.default.svc
