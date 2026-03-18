@@ -1,6 +1,6 @@
 # Netflix Deployment with ArgoCD — Declarative Approach
 
-> 📌 **Declarative = You describe the desired state in YAML, push to Git, and ArgoCD handles the rest.**  
+> 📌 **Declarative = You describe the desired state in YAML, push to Git , and ArgoCD handles the rest.**  
 > No manual `kubectl apply`. No running commands every time. Git is the single source of truth.
 
 ```
@@ -56,7 +56,7 @@ That's it. ArgoCD reads the repo and deploys `deployment.yaml` + `service.yaml` 
 
 ---
 
-## Verify
+##  Verify
 
 ```bash
 kubectl get pods
