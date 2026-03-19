@@ -32,7 +32,7 @@ Grafana Dashboards
 ## Prerequisites
 
 - Kind cluster running
-- ArgoCD installed via **official manifests** (not Helm)
+- ArgoCD installed 
 - `kubectl` configured
 - ArgoCD CLI installed and logged in
 - Helm 3.x installed
