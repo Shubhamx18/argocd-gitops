@@ -21,8 +21,8 @@ spec:
         - name: VITE_GEMINI_API
           valueFrom:
             secretKeyRef:
-              name: chai-app-secret
-              key: VITE_GEMINI_API
+              name: chai-app-secret    # secret name
+              key: VITE_GEMINI_API     # define in secret.yml of same folder
         resources:
           requests:
             memory: "64Mi"
