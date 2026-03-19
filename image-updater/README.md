@@ -257,6 +257,36 @@ level=info msg="images_updated=1 errors=0"
 
 ArgoCD picks up the commit and rolls out the new pods automatically.
 
+Check the deployment image directly:
+
+```bash
+kubectl get deployment chai-app -n default -o=jsonpath='{.spec.template.spec.containers[0].image}'
+```
+
+Output should show the new tag:
+
+```
+shubhamm18/chaiapp-devops:v1.0.1
+```
+
+Or check all running pods at once:
+
+```bash
+kubectl get pods -n default -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.containers[0].image}{"\n"}{end}'
+```
+
+```
+chai-app-xxxx-xxxxx    shubhamm18/chaiapp-devops:v1.0.1
+chai-app-xxxx-xxxxx    shubhamm18/chaiapp-devops:v1.0.1
+chai-app-xxxx-xxxxx    shubhamm18/chaiapp-devops:v1.0.1
+```
+
+If pods are still on the old tag, ArgoCD hasn't synced yet — wait a moment and check the ArgoCD UI or run:
+
+```bash
+argocd app get chai-app
+```
+
 ---
 
 ## 10. How to Verify Everything Worked
