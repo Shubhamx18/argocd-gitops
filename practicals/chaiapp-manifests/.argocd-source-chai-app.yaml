@@ -1,0 +1,3 @@
+kustomize:
+  images:
+  - shubhamm18/chaiapp-devops:v1.0.1
