@@ -32,7 +32,7 @@ Grafana Dashboards
 ## Prerequisites
 
 - Kind cluster running
-- ArgoCD installed 
+- ArgoCD installed via **official manifests** (not Helm)
 - `kubectl` configured
 - ArgoCD CLI installed and logged in
 - Helm 3.x installed
@@ -186,9 +186,17 @@ kubectl port-forward svc/kube-prometheus-stack-grafana \
 
 Open `http://<instance-ip>:3000`
 
+Get the Grafana admin password:
+
+```bash
+kubectl get secret kube-prometheus-stack-grafana \
+  -n monitoring \
+  -o jsonpath="{.data.admin-password}" | base64 --decode
+```
+
 ```
 Username : admin
-Password : prom-operator
+Password : <output of above command>  
 ```
 
 Prometheus datasource is already connected — nothing to configure.
