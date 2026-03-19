@@ -197,11 +197,22 @@ Prometheus datasource is already connected — nothing to configure.
 
 ## Step 7 — Import Dashboards
 
-### ArgoCD Overview — ID: `14584`
-
-**Dashboards → Import → ID `14584` → Load → Select `Prometheus` → Import**
+ArgoCD dashboards are published on Grafana Labs. Go to [grafana.com/grafana/dashboards](https://grafana.com/grafana/dashboards) and search **"argocd"** — you will find community dashboards with their IDs.
 
 ![Grafana dashboard 14584](output-images/grafana-dashboard-14584.png)
+
+We use two dashboards from these results:
+
+| Dashboard | ID | What it shows |
+|-----------|-----|--------------|
+| ArgoCD | `14584` | Sync status, health, reconcile stats |
+| ArgoCD Operational Overview | `19993` | Repo server, API rates, Git operations |
+
+Copy the dashboard ID from Grafana Labs, then import it in your Grafana:
+
+**Grafana UI → Dashboards → Import → paste the ID → Load → select `Prometheus` as datasource → Import**
+
+### ArgoCD Overview — ID: `14584`
 
 Live dashboard with all your app data:
 
@@ -217,11 +228,9 @@ Live dashboard with all your app data:
 
 Scroll down to see reconcile stats, controller queue depth, and more.
 
-### ArgoCD Operational — ID: `19993`
+### ArgoCD Operational Overview — ID: `19993`
 
-**Dashboards → Import → ID `19993` → Load → Select `Prometheus` → Import**
-
-Gives you repo server performance, reconcile durations, API request rates, and Git operation stats.
+Import the same way with ID `19993`. Gives you repo server performance, reconcile durations, API request rates, and Git operation stats.
 
 ---
 
