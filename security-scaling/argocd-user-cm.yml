@@ -8,19 +8,15 @@ metadata:
     app.kubernetes.io/part-of: argocd
 
 data:
-  # ArgoCD server URL
   url: http://localhost:8080
 
   # =========================
-  # LOCAL USER ACCOUNTS
+  # USERS
   # =========================
 
-  # login  → UI access
-  # apiKey → token (CI/CD)
+  accounts.shubham: apiKey, login
+  accounts.alex: login
+  accounts.gulshankumar: apiKey
 
-  accounts.alice: apiKey, login
-  accounts.bob: login
-  accounts.ci-user: apiKey
-
-  # Default role fallback
+  # Default fallback role
   policy.default: role:readonly
