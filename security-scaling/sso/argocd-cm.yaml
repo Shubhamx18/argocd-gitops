@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+
+data:
+  # ArgoCD URL (LOCAL SETUP)
+  url: https://localhost:8080
+
+  # =========================
+  # DEX CONFIG (GitHub SSO)
+  # =========================
+  dex.config: |
+    connectors:
+    - type: github
+      id: github
+      name: GitHub
+      config:
+        clientID: <GITHUB_CLIENT_ID>
+        clientSecret: <GITHUB_CLIENT_SECRET>
+
+        # Redirect URI (must match GitHub OAuth App)
+        redirectURI: https://localhost:8080/api/dex/callback
+
+        orgs:
+        - name: <GITHUB_ORG_NAME>
+
+  # =========================
+  # LOCAL BACKUP USER
+  # =========================
+  accounts.<USERNAME>: apiKey, login
+
+  # Default role
+  policy.default: role:readonly
