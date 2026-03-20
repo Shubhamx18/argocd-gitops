@@ -10,25 +10,44 @@ data:
     # ROLES
     # =====================================================
 
-    # Admin → full access to everything
-    p, role:admin, applications, *, */*, allow
-    p, role:admin, projects, *, *, allow
-    p, role:admin, repositories, *, *, allow
-    p, role:admin, clusters, *, *, allow
+    # -------------------------
+    # Admin → controlled full access
+    # -------------------------
+    p, role:admin, applications, get, */*, allow
+    p, role:admin, applications, create, */*, allow
+    p, role:admin, applications, update, */*, allow
+    p, role:admin, applications, delete, */*, allow
+    p, role:admin, applications, sync, */*, allow
 
-    # Readonly → view only (strict)
+    p, role:admin, projects, get, *, allow
+    p, role:admin, projects, create, *, allow
+    p, role:admin, projects, update, *, allow
+
+    p, role:admin, repositories, get, *, allow
+    p, role:admin, repositories, create, *, allow
+
+    p, role:admin, clusters, get, *, allow
+
+    # -------------------------
+    # Readonly → strict view only
+    # -------------------------
     p, role:readonly, applications, get, */*, allow
-    p, role:readonly, applications, *, */*, deny
+    p, role:readonly, projects, get, *, allow
 
-    # Developer → limited control (safe deploy access)
+    # (NO deny rule → avoids breaking UI)
+
+    # -------------------------
+    # Developer → limited deploy access
+    # -------------------------
     p, role:developer, applications, get, */*, allow
     p, role:developer, applications, sync, */*, allow
     p, role:developer, applications, update, */*, allow
 
+    p, role:developer, projects, get, *, allow
+
     # =====================================================
     # USER → ROLE MAPPING
     # =====================================================
-
     g, shubham, role:admin
     g, alex, role:readonly
     g, gulshankumar, role:developer
