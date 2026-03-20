@@ -6,53 +6,58 @@ metadata:
 
 data:
   policy.csv: |
-    # ---------------------------
-    # Roles
-    # ---------------------------
+    # =====================================================
+    # ROLES
+    # =====================================================
 
-    # Admin → full access
+    # Admin → full access to everything
     p, role:admin, applications, *, */*, allow
+    p, role:admin, projects, *, *, allow
+    p, role:admin, repositories, *, *, allow
+    p, role:admin, clusters, *, *, allow
 
-    # Read-only → only view apps
+    # Readonly → view only (strict)
     p, role:readonly, applications, get, */*, allow
     p, role:readonly, applications, *, */*, deny
 
-    # Developer → can view and deploy
+    # Developer → limited control (safe deploy access)
     p, role:developer, applications, get, */*, allow
     p, role:developer, applications, sync, */*, allow
+    p, role:developer, applications, update, */*, allow
 
-    # ---------------------------
-    # User to Role Mapping
-    # ---------------------------
+    # =====================================================
+    # USER → ROLE MAPPING
+    # =====================================================
 
     g, shubham, role:admin
     g, alex, role:readonly
     g, gulshankumar, role:developer
 
-  # Default role
+  # Default fallback role
   policy.default: role:readonly
 
-  # ---------------------------
-  # Reference (common RBAC rules)
-  # ---------------------------
+  # =====================================================
+  # RBAC REFERENCE (for maintainers)
+  # =====================================================
   # Format:
-  # p, <role/user>, <resource>, <action>, <object>, <effect>
+  # p, <role>, <resource>, <action>, <object>, <effect>
+  # g, <user/group>, <role>
 
   # Resources:
-  # applications, projects, clusters, repositories, accounts
+  # applications | projects | repositories | clusters | accounts
 
   # Actions:
-  # get      → view
-  # create   → create resources
-  # update   → modify
-  # delete   → remove
-  # sync     → deploy app
+  # get      → read/view
+  # create   → create resource
+  # update   → modify resource
+  # delete   → remove resource
+  # sync     → deploy application
   # override → force sync
-  # action   → run resource actions
+  # action   → custom resource actions
 
   # Object:
-  # */* → all projects/all apps
-  # myproject/* → specific project
+  # */*            → all projects / all apps
+  # myproject/*    → specific project
 
   # Effect:
-  # allow / deny
+  # allow | deny
