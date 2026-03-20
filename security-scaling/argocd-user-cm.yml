@@ -9,23 +9,18 @@ metadata:
 
 data:
   # ArgoCD server URL
-  url: https://argocd.example.com
+  url: http://localhost:8080
 
-  # Local user accounts
-  # login  -> UI access
-  # apiKey -> token access (CI/CD)
+  # =========================
+  # LOCAL USER ACCOUNTS
+  # =========================
+
+  # login  → UI access
+  # apiKey → token (CI/CD)
 
   accounts.alice: apiKey, login
   accounts.bob: login
   accounts.ci-user: apiKey
 
-  # RBAC policies
-  # p, <user>, <resource>, <action>, <object>, <effect>
-
-  policy.csv: |
-    p, alice, applications, *, */*, allow
-    p, bob, applications, get, */*, allow
-    p, ci-user, applications, sync, */*, allow
-
-  # default access (if not specified above)
+  # Default role fallback
   policy.default: role:readonly
