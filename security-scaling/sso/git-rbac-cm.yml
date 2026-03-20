@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+
+data:
+  scopes: '[groups, email]'
+
+  policy.csv: |
+    # =====================================================
+    # ROLE: repo-admin (FULL CONTROL but structured)
+    # =====================================================
+
+    # Applications
+    p, role:repo-admin, applications, get,    */*, allow
+    p, role:repo-admin, applications, create, */*, allow
+    p, role:repo-admin, applications, update, */*, allow
+    p, role:repo-admin, applications, delete, */*, allow
+    p, role:repo-admin, applications, sync,   */*, allow
+
+    # Projects
+    p, role:repo-admin, projects, get, *, allow
+    p, role:repo-admin, projects, create, *, allow
+    p, role:repo-admin, projects, update, *, allow
+
+    # Repositories
+    p, role:repo-admin, repositories, get, *, allow
+    p, role:repo-admin, repositories, create, *, allow
+    p, role:repo-admin, repositories, update, *, allow
+
+    # Clusters
+    p, role:repo-admin, clusters, get, *, allow
+
+    # =====================================================
+    # USER → ROLE MAPPING
+    # =====================================================
+
+    # Email mapping
+    g, <USER_EMAIL>, role:repo-admin
+
+    # Optional: GitHub username mapping
+    g, <GITHUB_USERNAME>, role:repo-admin
+
+  policy.default: role:readonly
