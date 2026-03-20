@@ -11,11 +11,11 @@ data:
     # ---------------------------
 
     # Admin → full access
-    
     p, role:admin, applications, *, */*, allow
 
     # Read-only → only view apps
     p, role:readonly, applications, get, */*, allow
+    p, role:readonly, applications, *, */*, deny
 
     # Developer → can view and deploy
     p, role:developer, applications, get, */*, allow
@@ -31,3 +31,28 @@ data:
 
   # Default role
   policy.default: role:readonly
+
+  # ---------------------------
+  # Reference (common RBAC rules)
+  # ---------------------------
+  # Format:
+  # p, <role/user>, <resource>, <action>, <object>, <effect>
+
+  # Resources:
+  # applications, projects, clusters, repositories, accounts
+
+  # Actions:
+  # get      → view
+  # create   → create resources
+  # update   → modify
+  # delete   → remove
+  # sync     → deploy app
+  # override → force sync
+  # action   → run resource actions
+
+  # Object:
+  # */* → all projects/all apps
+  # myproject/* → specific project
+
+  # Effect:
+  # allow / deny
