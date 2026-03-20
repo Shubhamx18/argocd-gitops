@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+
+data:
+  # ArgoCD server URL
+  url: https://argocd.example.com
+
+  # Local user accounts
+  # login  -> UI access
+  # apiKey -> token access (CI/CD)
+
+  accounts.alice: apiKey, login
+  accounts.bob: login
+  accounts.ci-user: apiKey
+
+  # RBAC policies
+  # p, <user>, <resource>, <action>, <object>, <effect>
+
+  policy.csv: |
+    p, alice, applications, *, */*, allow
+    p, bob, applications, get, */*, allow
+    p, ci-user, applications, sync, */*, allow
+
+  # default access (if not specified above)
+  policy.default: role:readonly
