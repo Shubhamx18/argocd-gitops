@@ -344,6 +344,6 @@ g, bob,   role:readonly
 
 [![GitHub](https://img.shields.io/badge/GitHub-Shubhamx18-181717?style=for-the-badge&logo=github)](https://github.com/Shubhamx18)
 
-⭐ Star this repo if it helped you! ⭐
+⭐ Star this repo if it helped you !!⭐
 
 </div>
