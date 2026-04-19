@@ -1,6 +1,6 @@
 <div align="center">
 
-# ArgoCD GitOps Repository
+# ArgoCD GitOps Repository -
 
 ![ArgoCD](https://img.shields.io/badge/ArgoCD-GitOps-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestration-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
