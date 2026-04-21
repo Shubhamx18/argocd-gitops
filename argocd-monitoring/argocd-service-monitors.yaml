@@ -1,5 +1,6 @@
 # argocd-service-monitors.yaml
 # This file defines ServiceMonitor resources for monitoring ArgoCD components with Prometheus Operator.
+#-------------------------------------------------------------------------------------------------------------------
 
 apiVersion: monitoring.coreos.com/v1 # API version for ServiceMonitor
 kind: ServiceMonitor                 # Resource type
